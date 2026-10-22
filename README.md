@@ -33,7 +33,11 @@ npx skills add https://github.com/marcelorodrigo/agent-skills --skill convention
 
 ### create-pr
 
-**Killer features:** Reviews your commits and diffs to deeply understand changes, explains the **motivation** behind them, considers alternative approaches, and structures PRs for faster, better reviews. Creates clear descriptions focused on context reviewers need (not redundant test plans or checklists). Uses draft PRs for early feedback.
+**Killer features:** Reviews commits and diffs to explain what changes and why. Adapts descriptions
+to the change: concise prose for small fixes, concrete evidence when available, compact visuals
+for complex behavior, and rollout or rollback limits for risky changes. Respects repository
+templates and release policies, supports draft-first validation, and distinguishes completed
+checks from pending or blocked coverage. Publishes Markdown safely through file-based input.
 
 ```bash
 npx skills add https://github.com/marcelorodrigo/agent-skills --skill create-pr
