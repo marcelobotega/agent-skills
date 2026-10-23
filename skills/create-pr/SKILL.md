@@ -98,43 +98,32 @@ fix(client): update dependencies to address security advisories
 
 ### Step 3: Write the Description
 
-Lead with what changed and why. Add issue links, meaningful alternatives, and reviewer context
-that the diff does not explain. Use the repository's domain terminology.
+Write one or two short paragraphs for ordinary PRs: what changed and why. Use the repository's
+terms and established motivation; ask the user if needed rather than inventing a justification.
+Bring material changes to guarantees or enforcement near the beginning.
 
-Scale the presentation to the change rather than filling a fixed template:
+Keep details that help reviewers assess behavior, compatibility, or risk. Leave routine file
+inventories, commands, and work logs in the diff, documentation, or agent's response. Before
+finalizing, cut repetition, filler, and assurances already obvious from the diff.
 
-| Change | Presentation |
+Add detail only when the change needs it, without a fixed template:
+
+| Detail | Include when |
 | --- | --- |
-| Small, straightforward | A few short paragraphs |
-| Complex behavior or structure | Add headings and a compact visual if it improves understanding |
-| Risky or operational | Explain affected consumers, compatibility, rollout, and rollback limits |
+| Issue links or alternatives | They explain the motivation or decision |
+| Evidence | Observed behavior, measurements, or screenshots support a review decision |
+| Compact visual | It explains behavior or relationships more clearly than prose |
+| Rollout or rollback limits | Compatibility, data changes, or consumer effects need explanation |
 
-#### Evidence
+Scope measurements and comparisons to what was observed; redact sensitive screenshot content.
+Distinguish intended behavior from verified outcomes, and reverting code from reversing data
+changes or effects already observed by consumers. Describe known behavioral limitations as part
+of the change. Use headings only when they help; omit empty sections and generic risk labels.
 
-Include concrete evidence when it supports a review decision:
-
-- A regression test that fails before the fix and passes afterward.
-- Screenshots for visual changes, with sensitive information removed.
-- Measured behavior, performance, or security improvements, with their scope stated.
-
-Use before/after comparisons only when both sides are supported. Distinguish local results
-from CI, and completed validation from pending, failed, or blocked checks. State limitations
-instead of inventing measurements, passing checks, or screenshots.
-
-Summarize relevant validation outcomes rather than duplicating the CI check list. Keep testing
-plans and step-by-step checklists out of the description unless the user or repository requires
-them; useful validation results still belong when they inform the review.
-
-#### Visuals and Risks
-
-Use the smallest visual that explains relationships or behavior more clearly than prose:
-a call tree, diff sketch, file tree, sequence diagram, or screenshot. Show only the relevant
-parts. A command history or changed-file list alone rarely explains the purpose of a PR.
-
-Explain material risks in concrete terms: who is affected, what could fail, what remains
-unresolved, and how rollout or rollback works. Distinguish reverting code from reversing
-data changes or effects already observed by consumers. Omit generic risk labels and empty
-sections; headings such as `Evidence` or `Risks` are optional.
+Keep test results, counts, CI status, and execution blockers in the agent's response or GitHub
+Checks, unless the user or repository explicitly requires them in the description. In that
+report, distinguish local results from CI and completed checks from pending, failed, or blocked
+checks. Never invent passing results or treat an undiagnosed failure as unrelated.
 
 For contrasting examples of small fixes, dependency updates, complex changes, and migrations,
 read [Description Examples](references/description-examples.md) when choosing the presentation.
@@ -145,11 +134,10 @@ For description-only requests, present the title and body in the conversation an
 ### Step 4: Publish or Update the PR
 
 For code publication, run the checks required by the repository or requested by the user before
-publishing by default. For a requested draft before validation, publish with checks marked
-pending, then run those checks and update the description with observed results and blockers.
-Follow repository requirements when they mandate validation first. Keep the PR a draft until
-a state change is authorized. Metadata-only edits do not require new commits, a push, or
-unrelated validation.
+publishing by default. For a requested draft before validation, publish first, then run those
+checks and report results to the user. Follow repository requirements when they mandate
+validation first. Keep the PR a draft until a state change is authorized. Metadata-only edits
+do not require new commits, a push, or unrelated validation.
 
 Before publishing code, ensure only the intended changes are committed. Use `conventional-commit`
 with the required authorization when available, or follow repository commit conventions directly.
@@ -207,5 +195,5 @@ Otherwise leave the title unchanged.
 After creation, use the returned PR number or URL to read it back. After editing, read back
 the same PR. Confirm the title, body, base, head, `headRefOid`, and draft state in the target
 repository. For code publication, compare `headRefOid` to `EXPECTED_HEAD`; for metadata-only
-edits, confirm the head and draft state stayed unchanged. Report the URL and any pending or
-blocked validation; mark checks successful only when their results are available.
+edits, confirm the head and draft state stayed unchanged. Report the URL and validation status
+in the agent's response, separately from the PR description.
